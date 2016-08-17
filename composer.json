@@ -1,0 +1,42 @@
+{
+    "name": "ChDeinert/phpPoHelper",
+    "type": "library",
+    "description": "Easier access and work with gettext's Po and Pot files in PHP",
+    "keywords": [
+        "gettext",
+        "pot",
+        "po",
+        "mo",
+        "package"
+    ],
+    "homepage": "https://github.com/ChDeinert/phpPoHelper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ChDeinert",
+            "email": "ChDeinert@gmail.com",
+            "homepage": "http://ChDeinert.github.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.3.*",
+        "mockery/mockery": "0.9.*",
+        "codegyre/robo": "0.7.*",
+        "fzaninotto/faker": "1.6.*",
+        "friendsofphp/php-cs-fixer": "^1.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChDeinert\\phpPoHelper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ChDeinert\\phpPoHelper\\Test\\": "tests"
+        }
+    }
+}
