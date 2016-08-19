@@ -17,10 +17,6 @@ class PoMessagetest extends \PHPUnit_Framework_TestCase
         $this->faker = Faker::create();
     }
 
-    public function tearDown()
-    {
-    }
-
     /**
      * @test
      */
