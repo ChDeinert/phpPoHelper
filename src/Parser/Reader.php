@@ -3,8 +3,10 @@
 namespace ChDeinert\phpPoHelper\Parser;
 
 use ChDeinert\phpPoHelper\PoHeader;
+use ChDeinert\phpPoHelper\PoMessage;
 use ChDeinert\phpPoHelper\Collections\Messages;
 use ChDeinert\phpPoHelper\PoFile;
+use DateTime;
 
 /**
  * Reads a PoFile and created a PoFile Object
@@ -17,11 +19,102 @@ class Reader
             return null;
         }
 
-        $title = '';
-        $poHeader = new PoHeader($title);
-        $messages = new Messages;
+        $fileContents = file_get_contents($filename);
+        $fileContentsArray = explode("\n\n", $fileContents);
+
+        $poHeader = $this->getPoHeader($fileContentsArray[0]);
+        $messages = $this->getMessageCollection($fileContentsArray);
+
         $poFile = new PoFile($filename, $poHeader, $messages);
 
         return $poFile;
+    }
+
+    private function getPoHeader($fileContents)
+    {
+        if (preg_match('/msgid ""/', $fileContents) == false) {
+            return new PoHeader('');
+        }
+
+        $title = $this->parseTitle($fileContents);
+        $language = $this->parseLanguage($fileContents);
+        $poRevisionDate = $this->parseRevisionDate($fileContents);
+
+        $poHeader = new PoHeader($title);
+
+        if (!empty($language)) {
+            $poHeader->setLanguage($language);
+        }
+        if (!empty($poRevisionDate)) {
+            $poHeader->setRevisionDate($poRevisionDate);
+        }
+
+        return $poHeader;
+    }
+
+    private function parseTitle($fileContents)
+    {
+        preg_match('/# ([\s\S].*)\\n/', $fileContents, $titleMatch);
+
+        return isset($titleMatch[1]) ? $titleMatch[1] : '';
+    }
+
+    private function parseLanguage($fileContents)
+    {
+        preg_match('/"Language: ([\w]*).*"/', $fileContents, $languageMatch);
+
+        return isset($languageMatch[1]) ? $languageMatch[1] : '';
+    }
+
+    private function parseRevisionDate($fileContents)
+    {
+        preg_match('/"PO-Revision-Date: ([\d- :+]*)/', $fileContents, $poRevisionDateMatch);
+        $poRevisionDate = isset($poRevisionDateMatch[1]) ? $poRevisionDateMatch[1] : '';
+
+        return new DateTime($poRevisionDate);
+    }
+
+    private function getMessageCollection($contentArray)
+    {
+        $messages = new Messages;
+
+        foreach ($contentArray as $content) {
+            preg_match('/msgid "([\w\d\s].*[^"])"/', $content, $msgidMatch);
+            $msgid = isset($msgidMatch[1]) ? $msgidMatch[1] : '';
+
+            if (empty($msgid)) {
+                continue;
+            }
+
+            preg_match('/msgstr "([\w\d\s].*[^"])"/', $content, $msgstrMatch);
+            $msgstr = isset($msgstrMatch[1]) ? $msgstrMatch[1] : '';
+
+            $poMessage = new PoMessage($msgid, $msgstr);
+
+            preg_match_all('/#, (\w*)/', $content, $flagsMatch);
+
+            foreach ($flagsMatch[1] as $flag) {
+                $poMessage->addFlag($flag);
+            }
+
+            preg_match_all('/#: (\w.*)/', $content, $referenceMatches);
+
+            foreach ($referenceMatches[1] as $referenceLine) {
+                $referenceLineArray = explode(' ', $referenceLine);
+
+                foreach ($referenceLineArray as $referenceEntry) {
+                    $referenceArray = explode(':', $referenceEntry);
+                    $reference = [
+                        'file' => $referenceArray[0],
+                        'line' => $referenceArray[1],
+                    ];
+                    $poMessage->addReference($reference);
+                }
+            }
+
+            $messages->add($poMessage);
+        }
+
+        return $messages;
     }
 }

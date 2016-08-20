@@ -1,0 +1,4 @@
+#: file/example.ext:123
+#, fuzzy
+msgid "Message ID"
+msgstr "Message String"
