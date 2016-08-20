@@ -79,42 +79,53 @@ class Reader
         $messages = new Messages;
 
         foreach ($contentArray as $content) {
-            preg_match('/msgid "([\w\d\s].*[^"])"/', $content, $msgidMatch);
-            $msgid = isset($msgidMatch[1]) ? $msgidMatch[1] : '';
+            $poMessage = $this->parseSingleMessage($content);
 
-            if (empty($msgid)) {
+            if ($poMessage === false) {
                 continue;
-            }
-
-            preg_match('/msgstr "([\w\d\s].*[^"])"/', $content, $msgstrMatch);
-            $msgstr = isset($msgstrMatch[1]) ? $msgstrMatch[1] : '';
-
-            $poMessage = new PoMessage($msgid, $msgstr);
-
-            preg_match_all('/#, (\w*)/', $content, $flagsMatch);
-
-            foreach ($flagsMatch[1] as $flag) {
-                $poMessage->addFlag($flag);
-            }
-
-            preg_match_all('/#: (\w.*)/', $content, $referenceMatches);
-
-            foreach ($referenceMatches[1] as $referenceLine) {
-                $referenceLineArray = explode(' ', $referenceLine);
-
-                foreach ($referenceLineArray as $referenceEntry) {
-                    $referenceArray = explode(':', $referenceEntry);
-                    $reference = [
-                        'file' => $referenceArray[0],
-                        'line' => $referenceArray[1],
-                    ];
-                    $poMessage->addReference($reference);
-                }
             }
 
             $messages->add($poMessage);
         }
 
         return $messages;
+    }
+
+    private function parseSingleMessage($messageLine)
+    {
+        preg_match('/msgid "([\w\d\s].*[^"])"/', $messageLine, $msgidMatch);
+        $msgid = isset($msgidMatch[1]) ? $msgidMatch[1] : '';
+
+        if (empty($msgid)) {
+            return false;
+        }
+
+        preg_match('/msgstr "([\w\d\s].*[^"])"/', $messageLine, $msgstrMatch);
+        $msgstr = isset($msgstrMatch[1]) ? $msgstrMatch[1] : '';
+
+        $poMessage = new PoMessage($msgid, $msgstr);
+
+        preg_match_all('/#, (\w*)/', $messageLine, $flagsMatch);
+
+        foreach ($flagsMatch[1] as $flag) {
+            $poMessage->addFlag($flag);
+        }
+
+        preg_match_all('/#: (\w.*)/', $messageLine, $referenceMatches);
+
+        foreach ($referenceMatches[1] as $referenceLine) {
+            $referenceLineArray = explode(' ', $referenceLine);
+
+            foreach ($referenceLineArray as $referenceEntry) {
+                $referenceArray = explode(':', $referenceEntry);
+                $reference = [
+                    'file' => $referenceArray[0],
+                    'line' => $referenceArray[1],
+                ];
+                $poMessage->addReference($reference);
+            }
+        }
+
+        return $poMessage;
     }
 }
