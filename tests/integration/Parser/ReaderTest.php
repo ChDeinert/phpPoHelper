@@ -10,6 +10,9 @@ use Chdeinert\phpPoHelper\PoFile;
 use Faker\Factory as Faker;
 use DateTime;
 
+/**
+ * @coversNothing
+ */
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     private $faker;
