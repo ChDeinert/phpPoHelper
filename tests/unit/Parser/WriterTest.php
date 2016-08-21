@@ -7,6 +7,7 @@ use ChDeinert\phpPoHelper\PoFile;
 use ChDeinert\phpPoHelper\PoHeader;
 use ChDeinert\phpPoHelper\Collections\Messages;
 use Mockery;
+use DateTime;
 
 /**
  * @covers ChDeinert\phpPoHelper\Parser\Writer
@@ -38,8 +39,14 @@ class WriterTest extends \PHPUnit_Framework_TestCase
      */
     public function writerCreatesAPoFileOnTheFileSystem()
     {
-        $poHeaderMock = Mockery::mock(PoHeader::class);
-        $messagesMock = Mockery::mock(Messages::class);
+        $poHeaderMock = Mockery::mock(PoHeader::class)
+            ->shouldReceive('getTitle', 'getLanguage')
+            ->shouldReceive('getRevisionDate')
+            ->andReturn(new DateTime)
+            ->getMock();
+        $messagesMock = Mockery::mock(Messages::class)
+            ->shouldReceive('count')
+            ->getMock();
         $poFileMock = Mockery::mock(PoFile::class);
         $poFileMock->filename = $this->testFileName;
         $poFileMock->poHeader = $poHeaderMock;
