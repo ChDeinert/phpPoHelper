@@ -7,7 +7,6 @@ use ChDeinert\phpPoHelper\PoHeader;
 use ChDeinert\phpPoHelper\PoMessage;
 use ChDeinert\phpPoHelper\Collections\Messages;
 use Chdeinert\phpPoHelper\PoFile;
-use Faker\Factory as Faker;
 use DateTime;
 
 /**
@@ -15,13 +14,6 @@ use DateTime;
  */
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
-    private $faker;
-
-    public function setUp()
-    {
-        $this->faker = Faker::create();
-    }
-
     /**
      * @test
      */
