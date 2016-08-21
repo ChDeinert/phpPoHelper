@@ -68,21 +68,6 @@ class Messages extends Functional implements Countable
     }
 
     /**
-     * @param  function $func
-     * @return array
-     */
-    public function map($func)
-    {
-        $result = [];
-
-        foreach ($this->items as $poMessage) {
-            $result[] = $func($poMessage);
-        }
-
-        return $result;
-    }
-
-    /**
      * Builds an index array for easier search inside the Collection
      */
     private function buildIndex()
