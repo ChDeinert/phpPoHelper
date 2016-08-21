@@ -139,4 +139,43 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedMessageCollection, $actualMessageCollection);
     }
+
+    /**
+     * @test
+     */
+    public function readingAFileWithHeaderAndMessageReturnsAFullPoFileObject()
+    {
+        $expectedHeaderTitle = 'Header Title';
+        $expectedLanguage = 'de';
+        $expectedRevisionDate = new DateTime('2016-09-20 13:36:00+0000');
+        $expectedPoHeader = new PoHeader($expectedHeaderTitle);
+        $expectedPoHeader->setLanguage($expectedLanguage);
+        $expectedPoHeader->setRevisionDate($expectedRevisionDate);
+
+        $expectedMsgid = 'Message ID';
+        $expectedMsgstr = 'Message String';
+        $expectedFlag = 'fuzzy';
+        $expectedReference1 = [
+            'file' => 'file/example.ext',
+            'line' => 123
+        ];
+        $expectedReference2 = [
+            'file' => 'file/example2.ext',
+            'line' => 321
+        ];
+        $expectedMessageInCollection = new PoMessage($expectedMsgid, $expectedMsgstr);
+        $expectedMessageInCollection->addFlag($expectedFlag);
+        $expectedMessageInCollection->addReference($expectedReference1);
+        $expectedMessageInCollection->addReference($expectedReference2);
+        $expectedMessageCollection = new Messages;
+        $expectedMessageCollection->add($expectedMessageInCollection);
+
+        $testFile = __DIR__.'/Ressources/file_with_header_and_message.po';
+        $expectedPoFile = new PoFile($testFile, $expectedPoHeader, $expectedMessageCollection);
+
+        $testReader = new Reader;
+        $actualPoFile = $testReader->parse($testFile);
+
+        $this->assertEquals($expectedPoFile, $actualPoFile);
+    }
 }
