@@ -9,6 +9,9 @@ use ChDeinert\phpPoHelper\PoFile;
  * @covers ChDeinert\phpPoHelper\Parser\Reader
  *
  * @uses ChDeinert\phpPoHelper\PoFile
+ * @uses ChDeinert\phpPoHelper\PoHeader
+ * @uses ChDeinert\phpPoHelper\PoMessage
+ * @uses ChDeinert\phpPoHelper\Collections\Messages
  */
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
