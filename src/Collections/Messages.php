@@ -8,13 +8,8 @@ use Countable;
 /**
  * Message Collection
  */
-class Messages implements Countable
+class Messages extends Functional implements Countable
 {
-    /**
-     * @var array
-     */
-    private $items;
-
     /**
      * @var array
      */
