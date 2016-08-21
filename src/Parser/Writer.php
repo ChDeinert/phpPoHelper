@@ -39,11 +39,11 @@ class Writer
         $messageContent = $poFile->messages->reduce(function ($messageContent, $poMessage) {
             $tmpMessageContent = '';
             $references = new Functional($poMessage->getReferences());
-            $tmpMessageContent .= $references->reduce(function($tmpReferences, $reference) {
+            $tmpMessageContent .= $references->reduce(function ($tmpReferences, $reference) {
                 return $tmpReferences."#: ".$reference['file'].':'.$reference['line']."\n";
             }, '');
             $flags = new Functional($poMessage->getFlags());
-            $tmpMessageContent .= $flags->reduce(function($tmpFlags, $flag) {
+            $tmpMessageContent .= $flags->reduce(function ($tmpFlags, $flag) {
                 return $tmpFlags."#, ".$flag."\n";
             }, '');
             $tmpMessageContent .= "msgid \"{$poMessage->getMsgid()}\"\n".
