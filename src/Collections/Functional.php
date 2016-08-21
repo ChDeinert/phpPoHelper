@@ -9,11 +9,20 @@ class Functional
 {
     protected $items;
 
-    public function __construct($items)
+    /**
+     * @param array $items
+     */
+    public function __construct(array $items)
     {
         $this->items = $items;
     }
 
+    /**
+     * Map Method that returns a new Functional Collection
+     *
+     * @param  function $func
+     * @return ChDeinert\phpPoHelper\Collections\Functional
+     */
     public function map($func)
     {
         $result = [];
@@ -25,6 +34,13 @@ class Functional
         return new Functional($result);
     }
 
+    /**
+     * Reduce Method
+     *
+     * @param  function $func
+     * @param  mixed $initial
+     * @return mixed
+     */
     public function reduce($func, $initial)
     {
         $accumulator = $initial;
