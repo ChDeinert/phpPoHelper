@@ -91,27 +91,37 @@ class Reader
         return $messages;
     }
 
-    private function parseSingleMessage($messageLine)
+    private function parseSingleMessage(String $messageText)
     {
-        preg_match('/msgid "([\w\d\s].*[^"])"/', $messageLine, $msgidMatch);
+        preg_match('/msgid "([\w\d\s].*[^"])"/', $messageText, $msgidMatch);
         $msgid = isset($msgidMatch[1]) ? $msgidMatch[1] : '';
 
         if (empty($msgid)) {
             return false;
         }
 
-        preg_match('/msgstr "([\w\d\s].*[^"])"/', $messageLine, $msgstrMatch);
+        preg_match('/msgstr "([\w\d\s].*[^"])"/', $messageText, $msgstrMatch);
         $msgstr = isset($msgstrMatch[1]) ? $msgstrMatch[1] : '';
 
         $poMessage = new PoMessage($msgid, $msgstr);
+        $this->addFlagsToPoMessage($poMessage, $messageText);
+        $this->addReferencesToPoMessage($poMessage, $messageText);
 
-        preg_match_all('/#, (\w*)/', $messageLine, $flagsMatch);
+        return $poMessage;
+    }
+
+    private function addFlagsToPoMessage(PoMessage $poMessage, String $messageText)
+    {
+        preg_match_all('/#, (\w*)/', $messageText, $flagsMatch);
 
         foreach ($flagsMatch[1] as $flag) {
             $poMessage->addFlag($flag);
         }
+    }
 
-        preg_match_all('/#: (\w.*)/', $messageLine, $referenceMatches);
+    private function addReferencesToPoMessage(PoMessage $poMessage, String $messageText)
+    {
+        preg_match_all('/#: (\w.*)/', $messageText, $referenceMatches);
 
         foreach ($referenceMatches[1] as $referenceLine) {
             $referenceLineArray = explode(' ', $referenceLine);
@@ -125,7 +135,5 @@ class Reader
                 $poMessage->addReference($reference);
             }
         }
-
-        return $poMessage;
     }
 }
