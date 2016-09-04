@@ -9,6 +9,9 @@ use ChDeinert\phpPoHelper\Collections\Messages;
 use ChDeinert\phpPoHelper\PoMessage;
 use DateTime;
 
+/**
+ * @coversNothing
+ */
 class WriterTest extends \PHPUnit_Framework_TestCase
 {
     private $testFileName = __DIR__.'/Ressources/writer_test_file.po';
