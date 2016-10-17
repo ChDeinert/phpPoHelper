@@ -27,7 +27,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $expectedPoHeader->setRevisionDate($expectedRevisionDate);
 
         $testReader = new Reader;
-        $testFile = __DIR__.'/Ressources/file_with_header.po';
+        $testFile = __DIR__.'/../../Ressources/file_with_header.po';
         $result = $testReader->parse($testFile);
         $actualPoHeader = $result->poHeader;
 
@@ -47,7 +47,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $expectedPoHeader->setRevisionDate($expectedRevisionDate);
 
         $testReader = new Reader;
-        $testFile = __DIR__.'/Ressources/file_with_wrong_header.po';
+        $testFile = __DIR__.'/../../Ressources/file_with_wrong_header.po';
         $result = $testReader->parse($testFile);
         $actualPoHeader = $result->poHeader;
 
@@ -67,7 +67,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $expectedPoHeader->setRevisionDate($expectedRevisionDate);
 
         $testReader = new Reader;
-        $testFile = __DIR__.'/Ressources/file_with_message.po';
+        $testFile = __DIR__.'/../../Ressources/file_with_message.po';
         $result = $testReader->parse($testFile);
         $actualPoHeader = $result->poHeader;
 
@@ -93,7 +93,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $expectedMessageCollection->add($expectedMessageInCollection);
 
         $testReader = new Reader;
-        $testFile = __DIR__.'/Ressources/file_with_message.po';
+        $testFile = __DIR__.'/../../Ressources/file_with_message.po';
         $result = $testReader->parse($testFile);
         $actualMessageCollection = $result->messages;
 
@@ -124,7 +124,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $expectedMessageCollection->add($expectedMessageInCollection);
 
         $testReader = new Reader;
-        $testFile = __DIR__.'/Ressources/file_with_multiple_reference_on_line.po';
+        $testFile = __DIR__.'/../../Ressources/file_with_multiple_reference_on_line.po';
         $result = $testReader->parse($testFile);
         $actualMessageCollection = $result->messages;
 
@@ -161,7 +161,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $expectedMessageCollection = new Messages;
         $expectedMessageCollection->add($expectedMessageInCollection);
 
-        $testFile = __DIR__.'/Ressources/file_with_header_and_message.po';
+        $testFile = __DIR__.'/../../Ressources/file_with_header_and_message.po';
         $expectedPoFile = new PoFile($testFile, $expectedPoHeader, $expectedMessageCollection);
 
         $testReader = new Reader;

@@ -14,7 +14,7 @@ use DateTime;
  */
 class WriterTest extends \PHPUnit_Framework_TestCase
 {
-    private $testFileName = __DIR__.'/Ressources/writer_test_file.po';
+    private $testFileName = __DIR__.'/../../Ressources/writer_test_file.po';
 
     public function setUp()
     {
@@ -32,7 +32,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
      */
     public function parsingAnEmptyPoFileObjectCreatesAMinimalPoFile()
     {
-        $expectedFileName = __DIR__.'/Ressources/writer_minimal_file.po';
+        $expectedFileName = __DIR__.'/../../Ressources/writer_minimal_file.po';
         $minimalPoHeader = new PoHeader('');
         $minimalPoHeader->setRevisionDate(new DateTime('2016-09-20 13:36+0000'));
         $minimalMessages = new Messages;
@@ -52,7 +52,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
      */
     public function parsingPoFileObjectWithHeaderCreatesAPoFile()
     {
-        $expectedFileName = __DIR__.'/Ressources/writer_header_no_message.po';
+        $expectedFileName = __DIR__.'/../../Ressources/writer_header_no_message.po';
         $poHeader = new PoHeader('Header Title');
         $poHeader->setRevisionDate(new DateTime('2016-09-20 13:36+0000'));
         $poHeader->setLanguage('de');
@@ -73,7 +73,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
      */
     public function parsingPoFileObjectWithMessageCreatesAPoFile()
     {
-        $expectedFileName = __DIR__.'/Ressources/writer_header_one_message.po';
+        $expectedFileName = __DIR__.'/../../Ressources/writer_header_one_message.po';
         $poHeader = new PoHeader('Header Title');
         $poHeader->setRevisionDate(new DateTime('2016-09-20 13:36+0000'));
         $poHeader->setLanguage('de');

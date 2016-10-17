@@ -19,7 +19,7 @@ use DateTime;
  */
 class WriterTest extends \PHPUnit_Framework_TestCase
 {
-    private $testFileName = __DIR__.'/Ressources/writerFile.po';
+    private $testFileName = __DIR__.'/../../Ressources/writerFile.po';
 
     public function setUp()
     {

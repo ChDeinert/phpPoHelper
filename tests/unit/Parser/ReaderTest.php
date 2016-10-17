@@ -22,7 +22,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function readingAFileReturnsAPoFileObject()
     {
-        $testFile = __DIR__.'/Ressources/emptyFile.po';
+        $testFile = __DIR__.'/../../Ressources/emptyFile.po';
         $testReader = new Reader;
 
         $result = $testReader->parse($testFile);
@@ -48,7 +48,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     public function readingAFileReturnsAPoFileObjectWithPoHeader()
     {
-      $testFile = __DIR__.'/Ressources/file_with_header.po';
+      $testFile = __DIR__.'/../../Ressources/file_with_header.po';
       $testReader = new Reader;
 
       $expectedHeaderTitle = 'Header Title';
