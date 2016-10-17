@@ -31,7 +31,7 @@ class PoMessage
      * @param String $msgid
      * @param string $msgstr
      */
-    public function __construct(String $msgid, String $msgstr = '')
+    public function __construct($msgid, $msgstr = '')
     {
         $this->msgid = $msgid;
         $this->setMsgstr($msgstr);
@@ -50,7 +50,7 @@ class PoMessage
     /**
      * @param String $msgstr
      */
-    public function setMsgstr(String $msgstr)
+    public function setMsgstr($msgstr)
     {
         $this->msgstr = $msgstr;
     }
@@ -66,7 +66,7 @@ class PoMessage
     /**
      * @param String $flag
      */
-    public function addFlag(String $flag)
+    public function addFlag($flag)
     {
         $this->flags[] = $flag;
     }

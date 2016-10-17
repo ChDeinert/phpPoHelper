@@ -56,7 +56,7 @@ class Messages extends Functional implements Countable
      * @param  String $msgidToSearch
      * @return null|PoMessage
      */
-    public function get(String $msgidToSearch)
+    public function get($msgidToSearch)
     {
         if (!array_key_exists($msgidToSearch, $this->index)) {
             return null;

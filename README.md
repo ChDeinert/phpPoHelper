@@ -39,7 +39,7 @@ And never will:
 
 Following PHP Versions are Supported/Tested
 
-- PHP 7
+- PHP 5.6 / 7
 
 
 ## Testing

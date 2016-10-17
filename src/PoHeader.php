@@ -27,7 +27,7 @@ class PoHeader
     /**
      * @param String $title
      */
-    public function __construct(String $title)
+    public function __construct($title)
     {
         $this->title = $title;
         $this->poRevisionDate = new DateTime;
@@ -44,7 +44,7 @@ class PoHeader
     /**
      * @param String $language
      */
-    public function setLanguage(String $language)
+    public function setLanguage($language)
     {
         $this->language = $language;
     }

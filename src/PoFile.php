@@ -29,7 +29,7 @@ class PoFile
      * @param PoHeader $poHeader
      * @param Messages $messages
      */
-    public function __construct(String $filename, PoHeader $poHeader, Messages $messages)
+    public function __construct($filename, PoHeader $poHeader, Messages $messages)
     {
         $this->filename = $filename;
         $this->poHeader = $poHeader;

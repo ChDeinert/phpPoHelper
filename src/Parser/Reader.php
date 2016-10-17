@@ -91,7 +91,7 @@ class Reader
         return $messages;
     }
 
-    private function parseSingleMessage(String $messageText)
+    private function parseSingleMessage($messageText)
     {
         preg_match('/msgid "([\w\d\s].*[^"])"/', $messageText, $msgidMatch);
         $msgid = isset($msgidMatch[1]) ? $msgidMatch[1] : '';
@@ -110,7 +110,7 @@ class Reader
         return $poMessage;
     }
 
-    private function addFlagsToPoMessage(PoMessage $poMessage, String $messageText)
+    private function addFlagsToPoMessage(PoMessage $poMessage, $messageText)
     {
         preg_match_all('/#, (\w*)/', $messageText, $flagsMatch);
 
@@ -119,7 +119,7 @@ class Reader
         }
     }
 
-    private function addReferencesToPoMessage(PoMessage $poMessage, String $messageText)
+    private function addReferencesToPoMessage(PoMessage $poMessage, $messageText)
     {
         preg_match_all('/#: (\w.*)/', $messageText, $referenceMatches);
 
